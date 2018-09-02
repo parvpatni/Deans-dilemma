@@ -1,0 +1,35 @@
+---
+title: "T-test (Dean's Dilemma)"
+author: "Parv Patni"
+date: "December 12, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+getwd()
+df <- read.csv("Data - Deans Dilemma.csv")
+```
+## Task 3b
+```{r}
+placed<-df[which(df$Placement_B==1),]
+(aggregate(df$Salary~df$Gender, data=placed, FUN=mean))
+```
+average salary of male MBAs who were placed - 284241.9 
+
+average salary of female MBAs who were placed - 253068.0 
+```{r}
+boxplot(placed$Salary~placed$Gender,main = "Average Salary of Male MBAs and Female MBAs", horizontal = TRUE, ylab = "Gender (Male/Female)", xlab = "Salary" ,col = (c("yellow","skyblue")), ylab = "Average Salary")
+```
+
+Since , the average salaries of males is higher than the average salaries of females in this dataset , their is a significant Gender Gap .
+
+## Task 3c
+Let us consider this Null Hypothesis :The is no significant difference between the average salary of male MBAs and female MBAs 
+```{r}
+t.test(Salary ~ Gender , data = placed)
+```
+The p-value is 0.0023 which is less than 0.05. Hence, we can safely reject the null hypothesis. This implies that there is a significant difference between average salaries of males and females i.e the average salary of the male MBAs is higher than the average salary of female MBAs.
